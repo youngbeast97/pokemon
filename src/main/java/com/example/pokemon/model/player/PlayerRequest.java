@@ -7,6 +7,6 @@ import lombok.Setter;
 @Setter
 
 public class PlayerRequest {
-    private String name;
+    private String namePlayer;
 
 }

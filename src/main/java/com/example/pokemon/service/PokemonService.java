@@ -46,7 +46,7 @@ public class PokemonService {
         name = name.toLowerCase();
 
         if (pokemonRepository.existsByName(name)) {
-            throw new PokemonAlreadyOwnedException("Pokemon already owned by player(s)");
+            throw new PokemonAlreadyOwnedException("Pokemon is already owned by player(s)");
         }
 
         if (player.getPokemons().size() >= 10) {
