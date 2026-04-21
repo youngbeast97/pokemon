@@ -19,7 +19,7 @@ public class BattleService {
     private final PokemonRepository pokemonRepository;
 
     @Transactional
-    public BattleResult fight(Long attackerId, Long defenderId,
+    public BattleResult fightPokemon(Long attackerId, Long defenderId,
                               Long attackerPokemonId, Long defenderPokemonId) {
 
         Player attacker = getPlayer(attackerId);
@@ -80,7 +80,7 @@ public class BattleService {
         Player loser  = result.getLoser();
 
         winner.setWinStreak(winner.getWinStreak() + 1);
-        loser.setWinStreak(0); //utrata passy winnera bo tego zapomnialem wgl ostatnio xd
+        loser.setWinStreak(0);
 
         winner.setBattleCounter(winner.getBattleCounter() + 1);
         loser.setBattleCounter(loser.getBattleCounter() + 1);
@@ -118,7 +118,7 @@ public class BattleService {
         }
         if (!defenderPokemon.getOwner().getId().equals(defenderId)) {
             throw new DefenderDoesntHaveThatPokemonException(
-                    "Defender doesn't have that pokemon");
+                    "Defender doesn't have that THE pokemon");
         }
     }
 
