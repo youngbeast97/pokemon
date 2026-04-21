@@ -8,5 +8,6 @@ import lombok.Setter;
 
 public class PlayerRequest {
     private String namePlayer;
+    private String age;
 
 }
