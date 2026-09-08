@@ -21,14 +21,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PokemonService {
 
-    /*
-    zmniejszanie HP o tyle o ile wygralem i zeby bylo >0 a schedule wraca 100% po jakims czasie
-    TESTOWANIE 80% okolo
-
-
-    i nastepny projekt znalezc API rejestru pedofili
-
-     */
     private final PlayerRepository playerRepository;
     private final PokemonRepository pokemonRepository;
     private final PokemonApiRequest pokemonApiRequest;
