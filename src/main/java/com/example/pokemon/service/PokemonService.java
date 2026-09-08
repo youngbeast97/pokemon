@@ -21,6 +21,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PokemonService {
 
+    private static final int MAX_POKEMONS_PER_PLAYER = 10;
+
     private final PlayerRepository playerRepository;
     private final PokemonRepository pokemonRepository;
     private final PokemonApiRequest pokemonApiRequest;
@@ -41,7 +43,7 @@ public class PokemonService {
             throw new PokemonAlreadyOwnedException("Pokemon is already owned by player(s)");
         }
 
-        if (player.getPokemons().size() >= 10) {
+        if (player.getPokemons().size() >= MAX_POKEMONS_PER_PLAYER) {
             throw new TooManyPokemonsForOnePlayerException("List of pokemons is full");
         }
 
