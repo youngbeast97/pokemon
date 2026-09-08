@@ -1,4 +1,4 @@
-package com.example.pokemon.exeption;
+package com.example.pokemon.exception;
 
 public class PokemonNotFoundWithProvidedIdException extends RuntimeException {
     public PokemonNotFoundWithProvidedIdException(String message) {
