@@ -19,7 +19,7 @@ public class BattleService {
     private final PokemonRepository pokemonRepository;
 
     @Transactional
-    public BattleResult fightPokemon(Long attackerId, Long defenderId,
+    public BattleResult fight(Long attackerId, Long defenderId,
                               Long attackerPokemonId, Long defenderPokemonId) {
 
         Player attacker = getPlayer(attackerId);
