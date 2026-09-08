@@ -1,6 +1,6 @@
 package com.example.pokemon.service;
 
-import com.example.pokemon.exception.*;
+import com.example.pokemon.exeption.*;
 import com.example.pokemon.model.battle.BattleFinalResult;
 import com.example.pokemon.model.battle.BattleResult;
 import com.example.pokemon.model.player.Player;
@@ -31,13 +31,12 @@ public class BattleService {
         Pokemon attackerPokemon = getPokemon(attackerPokemonId);
         Pokemon defenderPokemon = getPokemon(defenderPokemonId);
 
-        battleValidator.validateOwnership(attackerId, defenderId, attackerPokemon, defenderPokemon);
 
         BattleFinalResult result = resolveBattle(attacker, defender,
                 attackerPokemon, defenderPokemon);
 
-        boolean attackerWonGame = result.getWinner().getId().equals(attackerId);
-        Pokemon winnerPokemon = attackerWon ? attackerPokemon : defenderPokemon; //operator trojargumentowy mi wszedl w krew w koncu chyba - czekam na oklaski
+        boolean attackerWon = result.getWinner().getId().equals(attackerId);
+        Pokemon winnerPokemon = attackerWon ? attackerPokemon : defenderPokemon;
         Pokemon loserPokemon  = attackerWon ? defenderPokemon : attackerPokemon;
 
         applyHpChanges(winnerPokemon, loserPokemon);

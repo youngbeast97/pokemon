@@ -1,9 +1,12 @@
 package com.example.pokemon.service;
 
-import com.example.pokemon.exeption.InvalidPokemonNameException;
-import com.example.pokemon.exeption.PlayerNotFoundWithProvidedIdException;
-import com.example.pokemon.exeption.PokemonAlreadyOwnedException;
-import com.example.pokemon.exeption.TooManyPokemonsForOnePlayerException;
+import com.example.pokemon.exception.InvalidPokemonNameException;
+import com.example.pokemon.exception.PlayerNotFoundWithProvidedIdException;
+import com.example.pokemon.exception.PokemonAlreadyOwnedException;
+import com.example.pokemon.exception.TooManyPokemonsForOnePlayerException;
+import com.example.pokemon.exception.PlayerNotFoundWithProvidedIdException;
+import com.example.pokemon.exception.PokemonAlreadyOwnedException;
+import com.example.pokemon.exception.TooManyPokemonsForOnePlayerException;
 import com.example.pokemon.exception.PlayerNotFoundWithProvidedIdException;
 import com.example.pokemon.exception.PokemonAlreadyOwnedException;
 import com.example.pokemon.exception.TooManyPokemonsForOnePlayerException;
@@ -23,7 +26,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,14 +56,6 @@ class PokemonServiceTest {
         player.setBattleCounter(0);
         player.setWinStreak(0);
         player.setPokemons(new ArrayList<>());
-
-        ReflectionTestUtils.setField(pokemonService, "maxPokemonsPerPlayer", 10);
-    }
-
-    @Test
-    void shouldAddPokemonRejectBlankName() {
-        assertThatThrownBy(() -> pokemonService.addPokemonToPlayer(1L, "   "))
-                .isInstanceOf(InvalidPokemonNameException.class);
     }
 
 

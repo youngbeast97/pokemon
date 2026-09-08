@@ -1,8 +1,8 @@
 package com.example.pokemon.service;
 
-import com.example.pokemon.exception.PlayerNotFoundWithProvidedIdException;
-import com.example.pokemon.exception.PokemonAlreadyOwnedException;
-import com.example.pokemon.exception.TooManyPokemonsForOnePlayerException;
+import com.example.pokemon.exeption.PlayerNotFoundWithProvidedIdException;
+import com.example.pokemon.exeption.PokemonAlreadyOwnedException;
+import com.example.pokemon.exeption.TooManyPokemonsForOnePlayerException;
 import com.example.pokemon.model.player.Player;
 import com.example.pokemon.model.pokemon.Pokemon;
 import com.example.pokemon.model.pokemon.PokemonMapper;
@@ -12,16 +12,16 @@ import com.example.pokemon.pokeapi.PokemonApiResponse;
 import com.example.pokemon.repository.PlayerRepository;
 import com.example.pokemon.repository.PokemonRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class PokemonService {
+
+    private static final int MAX_POKEMONS_PER_PLAYER = 10;
 
     private final PlayerRepository playerRepository;
     private final PokemonRepository pokemonRepository;
@@ -54,12 +54,6 @@ public class PokemonService {
         player.getPokemons().add(pokemon);
 
         pokemonRepository.save(pokemon);
-    }
-
-    private void assertPlayerCanHaveMorePokemons(Player player) {
-        if (player.getPokemons().size() >= maxPokemonsPerPlayer) {
-            throw new TooManyPokemonsForOnePlayerException("List of pokemons is full");
-        }
     }
 
     public List<PokemonResponse> getPlayerPokemons(Long playerId) {
