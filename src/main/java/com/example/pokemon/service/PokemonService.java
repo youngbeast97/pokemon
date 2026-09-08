@@ -1,9 +1,5 @@
 package com.example.pokemon.service;
 
-import com.example.pokemon.exeption.InvalidPokemonNameException;
-import com.example.pokemon.exeption.PlayerNotFoundWithProvidedIdException;
-import com.example.pokemon.exeption.PokemonAlreadyOwnedException;
-import com.example.pokemon.exeption.TooManyPokemonsForOnePlayerException;
 import com.example.pokemon.exception.PlayerNotFoundWithProvidedIdException;
 import com.example.pokemon.exception.PokemonAlreadyOwnedException;
 import com.example.pokemon.exception.TooManyPokemonsForOnePlayerException;
@@ -32,15 +28,8 @@ public class PokemonService {
     private final PokemonApiRequest pokemonApiRequest;
     private final PokemonMapper pokemonMapper;
 
-    @Value("${pokemon.max-per-player:10}")
-    private int maxPokemonsPerPlayer;
-
     @Transactional
     public void addPokemonToPlayer(Long playerId, String name) {
-
-        if (!StringUtils.hasText(name)) {
-            throw new InvalidPokemonNameException("Pokemon name must not be blank");
-        }
 
         Player player = playerRepository.findById(playerId)
                 .orElseThrow(() ->
@@ -54,7 +43,9 @@ public class PokemonService {
             throw new PokemonAlreadyOwnedException("Pokemon is already owned by player(s)");
         }
 
-        assertPlayerCanHaveMorePokemons(player);
+        if (player.getPokemons().size() >= MAX_POKEMONS_PER_PLAYER) {
+            throw new TooManyPokemonsForOnePlayerException("List of pokemons is full");
+        }
 
         PokemonApiResponse response = pokemonApiRequest.getPokemon(name);
 
