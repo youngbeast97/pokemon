@@ -17,6 +17,7 @@ public class BattleService {
 
     private final PlayerRepository playerRepository;
     private final PokemonRepository pokemonRepository;
+    private final BattleValidator battleValidator;
 
     @Transactional
     public BattleResult fight(Long attackerId, Long defenderId,
@@ -25,12 +26,12 @@ public class BattleService {
         Player attacker = getPlayer(attackerId);
         Player defender = getPlayer(defenderId);
 
-        validateNotSamePlayer(attackerId, defenderId);
+        battleValidator.validateNotSamePlayer(attackerId, defenderId);
 
         Pokemon attackerPokemon = getPokemon(attackerPokemonId);
         Pokemon defenderPokemon = getPokemon(defenderPokemonId);
 
-        validateOwnership(attackerId, defenderId, attackerPokemon, defenderPokemon);
+        battleValidator.validateOwnership(attackerId, defenderId, attackerPokemon, defenderPokemon);
 
         BattleFinalResult result = resolveBattle(attacker, defender,
                 attackerPokemon, defenderPokemon);
@@ -101,25 +102,6 @@ public class BattleService {
                 result.getWinner().getId(), winnerPokemon.getName(), winnerPokemon.getHp(),
                 result.getLoser().getId(), loserPokemon.getName(), loserPokemon.getHp()
         );
-    }
-
-    private void validateNotSamePlayer(Long attackerId, Long defenderId) {
-        if (attackerId.equals(defenderId)) {
-            throw new PlayerTryToFightHimselfException("Player cannot fight against himself");
-        }
-    }
-
-    private void validateOwnership(Long attackerId, Long defenderId,
-                                   Pokemon attackerPokemon, Pokemon defenderPokemon) {
-
-        if (!attackerPokemon.getOwner().getId().equals(attackerId)) {
-            throw new AttackerDoesntHaveThatPokemonException(
-                    "Attacker doesn't have that pokemon ");
-        }
-        if (!defenderPokemon.getOwner().getId().equals(defenderId)) {
-            throw new DefenderDoesntHaveThatPokemonException(
-                    "Defender doesn't have that THE pokemon");
-        }
     }
 
     private Player getPlayer(Long id) {

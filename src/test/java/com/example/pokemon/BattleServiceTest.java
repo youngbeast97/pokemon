@@ -7,11 +7,11 @@ import com.example.pokemon.model.pokemon.PokemonType;
 import com.example.pokemon.repository.PlayerRepository;
 import com.example.pokemon.repository.PokemonRepository;
 import com.example.pokemon.service.BattleService;
-import com.example.pokemon.service.DamageCalculator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.ArrayList;
@@ -29,8 +29,7 @@ class BattleServiceTest {
     @Mock
     private PokemonRepository pokemonRepository;
 
-    // DamageCalculator jest prostym, bezstanowym komponentem - uzywamy
-    // prawdziwej instancji zamiast mockowac jego zachowanie.
+    @InjectMocks
     private BattleService battleService;
 
 
@@ -41,8 +40,6 @@ class BattleServiceTest {
 
     @BeforeEach
     void setUp() {
-        battleService = new BattleService(playerRepository, pokemonRepository, new DamageCalculator());
-
         attacker = createPlayer(1L, "Ash", 0, 0);
         defender = createPlayer(2L, "Gary", 0, 0);
 
