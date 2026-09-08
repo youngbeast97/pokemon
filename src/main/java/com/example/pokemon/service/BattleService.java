@@ -17,7 +17,6 @@ public class BattleService {
 
     private final PlayerRepository playerRepository;
     private final PokemonRepository pokemonRepository;
-    private final DamageCalculator damageCalculator;
 
     @Transactional
     public BattleResult fight(Long attackerId, Long defenderId,
@@ -69,7 +68,8 @@ public class BattleService {
     }
 
     public void applyHpChanges(Pokemon winnerPokemon, Pokemon loserPokemon) {
-        winnerPokemon.setHp(damageCalculator.calculateRemainingHp(winnerPokemon, loserPokemon));
+        int newWinnerHp = winnerPokemon.getHp() - loserPokemon.getHp();
+        winnerPokemon.setHp(Math.max(0, newWinnerHp));
         loserPokemon.setHp(0);
     }
 
@@ -97,7 +97,7 @@ public class BattleService {
                             Pokemon winnerPokemon, Pokemon loserPokemon) {
 
         return String.format(
-                "Winner is Player: %d (%s, HP after battle: %d) vs Player %d (%s, HP after battle: %d)",
+                "Winner is Player:  %d (%s, HP after battle battle: %d) vs Player %d (%s, HP after battle: %d)", //tu se musialem pomoc zeby to jako tako wygladalo
                 result.getWinner().getId(), winnerPokemon.getName(), winnerPokemon.getHp(),
                 result.getLoser().getId(), loserPokemon.getName(), loserPokemon.getHp()
         );
