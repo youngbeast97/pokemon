@@ -1,4 +1,4 @@
-package com.example.pokemon.exeption;
+package com.example.pokemon.exception;
 
 public class TooManyPokemonsForOnePlayerException extends RuntimeException {
     public TooManyPokemonsForOnePlayerException(String message) {

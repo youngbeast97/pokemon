@@ -1,5 +1,5 @@
 package com.example.pokemon;
-import com.example.pokemon.exeption.*;
+import com.example.pokemon.exception.*;
 import com.example.pokemon.model.battle.BattleResult;
 import com.example.pokemon.model.player.Player;
 import com.example.pokemon.model.pokemon.Pokemon;
