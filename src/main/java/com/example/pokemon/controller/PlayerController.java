@@ -1,5 +1,6 @@
 package com.example.pokemon.controller;
 
+import com.example.pokemon.exception.PlayerNotFoundWithProvidedIdException;
 import com.example.pokemon.model.player.Player;
 import com.example.pokemon.model.player.PlayerMapper;
 import com.example.pokemon.model.player.PlayerRequest;
@@ -8,6 +9,7 @@ import com.example.pokemon.model.pokemon.PokemonResponse;
 import com.example.pokemon.pokeapi.PokemonApiRequest;
 import com.example.pokemon.repository.PlayerRepository;
 import com.example.pokemon.service.PokemonService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,7 +30,7 @@ public class PlayerController {
     }
 
     @PostMapping
-    public PlayerResponse createPlayer(@RequestBody PlayerRequest request) {
+    public PlayerResponse createPlayer(@Valid @RequestBody PlayerRequest request) {
 
         Player player = PlayerMapper.toEntity(request);
         Player saved = playerRepository.save(player);
@@ -39,7 +41,7 @@ public class PlayerController {
     @GetMapping("/{id}")
     public PlayerResponse get(@PathVariable Long id) {
         Player player = playerRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Player not found"));
+                .orElseThrow(() -> new PlayerNotFoundWithProvidedIdException("Player not found with ID: " + id));
 
         return PlayerMapper.toResponse(player);
     }
