@@ -1,5 +1,6 @@
 package com.example.pokemon.service;
 
+import com.example.pokemon.exeption.InvalidPokemonNameException;
 import com.example.pokemon.exeption.PlayerNotFoundWithProvidedIdException;
 import com.example.pokemon.exeption.PokemonAlreadyOwnedException;
 import com.example.pokemon.exeption.TooManyPokemonsForOnePlayerException;
@@ -12,8 +13,10 @@ import com.example.pokemon.pokeapi.PokemonApiResponse;
 import com.example.pokemon.repository.PlayerRepository;
 import com.example.pokemon.repository.PokemonRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -21,21 +24,20 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PokemonService {
 
-    /*
-    zmniejszanie HP o tyle o ile wygralem i zeby bylo >0 a schedule wraca 100% po jakims czasie
-    TESTOWANIE 80% okolo
-
-
-    i nastepny projekt znalezc API rejestru pedofili
-
-     */
     private final PlayerRepository playerRepository;
     private final PokemonRepository pokemonRepository;
     private final PokemonApiRequest pokemonApiRequest;
     private final PokemonMapper pokemonMapper;
 
+    @Value("${pokemon.max-per-player:10}")
+    private int maxPokemonsPerPlayer;
+
     @Transactional
     public void addPokemonToPlayer(Long playerId, String name) {
+
+        if (!StringUtils.hasText(name)) {
+            throw new InvalidPokemonNameException("Pokemon name must not be blank");
+        }
 
         Player player = playerRepository.findById(playerId)
                 .orElseThrow(() ->
@@ -49,9 +51,7 @@ public class PokemonService {
             throw new PokemonAlreadyOwnedException("Pokemon is already owned by player(s)");
         }
 
-        if (player.getPokemons().size() >= 10) {
-            throw new TooManyPokemonsForOnePlayerException("List of pokemons is full");
-        }
+        assertPlayerCanHaveMorePokemons(player);
 
         PokemonApiResponse response = pokemonApiRequest.getPokemon(name);
 
@@ -60,6 +60,12 @@ public class PokemonService {
         player.getPokemons().add(pokemon);
 
         pokemonRepository.save(pokemon);
+    }
+
+    private void assertPlayerCanHaveMorePokemons(Player player) {
+        if (player.getPokemons().size() >= maxPokemonsPerPlayer) {
+            throw new TooManyPokemonsForOnePlayerException("List of pokemons is full");
+        }
     }
 
     public List<PokemonResponse> getPlayerPokemons(Long playerId) {
