@@ -7,7 +7,7 @@ public final class PlayerMapper {
 
     public static Player toEntity(PlayerRequest request) {
         Player player = new Player();
-        player.setName(request.getName());
+        player.setName(request.getNamePlayer());
         player.setBattleCounter(0);
         player.setWinStreak(0);
         return player;
