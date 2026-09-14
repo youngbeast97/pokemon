@@ -37,8 +37,8 @@ public class BattleService {
                 attackerPokemon, defenderPokemon);
 
         boolean attackerWonGame = result.getWinner().getId().equals(attackerId);
-        Pokemon winnerPokemon = attackerWon ? attackerPokemon : defenderPokemon; //operator trojargumentowy mi wszedl w krew w koncu chyba - czekam na oklaski
-        Pokemon loserPokemon  = attackerWon ? defenderPokemon : attackerPokemon;
+        Pokemon winnerPokemon = attackerWonGame ? attackerPokemon : defenderPokemon; //operator trojargumentowy mi wszedl w krew w koncu chyba - czekam na oklaski
+        Pokemon loserPokemon  = attackerWonGame ? defenderPokemon : attackerPokemon;
 
         applyHpChanges(winnerPokemon, loserPokemon);
 
