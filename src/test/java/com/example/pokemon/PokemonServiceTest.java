@@ -1,12 +1,6 @@
-package com.example.pokemon.service;
+package com.example.pokemon;
 
-import com.example.pokemon.exception.InvalidPokemonNameException;
-import com.example.pokemon.exception.PlayerNotFoundWithProvidedIdException;
-import com.example.pokemon.exception.PokemonAlreadyOwnedException;
-import com.example.pokemon.exception.TooManyPokemonsForOnePlayerException;
-import com.example.pokemon.exception.PlayerNotFoundWithProvidedIdException;
-import com.example.pokemon.exception.PokemonAlreadyOwnedException;
-import com.example.pokemon.exception.TooManyPokemonsForOnePlayerException;
+
 import com.example.pokemon.exception.PlayerNotFoundWithProvidedIdException;
 import com.example.pokemon.exception.PokemonAlreadyOwnedException;
 import com.example.pokemon.exception.TooManyPokemonsForOnePlayerException;
@@ -19,8 +13,9 @@ import com.example.pokemon.pokeapi.PokemonApiRequest;
 import com.example.pokemon.pokeapi.PokemonApiResponse;
 import com.example.pokemon.repository.PlayerRepository;
 import com.example.pokemon.repository.PokemonRepository;
+import com.example.pokemon.service.PokemonService;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

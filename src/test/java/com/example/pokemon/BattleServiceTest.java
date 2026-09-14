@@ -9,7 +9,6 @@ import com.example.pokemon.repository.PokemonRepository;
 import com.example.pokemon.service.BattleService;
 import com.example.pokemon.service.BattleValidator;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;

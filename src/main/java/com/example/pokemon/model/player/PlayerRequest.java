@@ -1,5 +1,6 @@
 package com.example.pokemon.model.player;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
