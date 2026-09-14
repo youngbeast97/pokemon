@@ -19,6 +19,7 @@ public final class PlayerMapper {
         response.setName(player.getName());
         response.setBattleCounter(player.getBattleCounter());
         response.setWinStreak(player.getWinStreak());
+        response.setPokemonCount(player.getPokemons().size());
 
         response.setPokemons(player.getPokemons()
                 .stream()

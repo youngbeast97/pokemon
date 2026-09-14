@@ -17,5 +17,6 @@ public class PlayerResponse {
     private int battleCounter;
     private int winStreak;
     private List<String> pokemons;
+    private int pokemonCount;
 
 }
